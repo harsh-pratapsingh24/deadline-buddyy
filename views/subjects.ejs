@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: "subjects", currentUser: currentUser }) %>
+
+<!-- Main Content -->
+<main class="main-content">
+    <section class="section active">
+        <div class="section-header">
+            <h2>Subjects</h2>
+
+            <div class="button-group">
+                <button class="btn-primary" id="openModal">
+                    <i class="ph ph-plus"></i> Add New Subject
+                </button>
+
+                <button class="btn-primary" id="resetSubjects">
+                    <i class="ph ph-trash"></i> Reset All Subjects
+                </button>
+            </div>
+        </div>
+
+        <div class="subjects-grid" id="subjectsGrid">
+            <!-- Subjects will be dynamically loaded -->
+        </div>
+    </section>
+</main>
+
+<!-- Modal -->
+<div class="modal" id="subjectModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Subject</h2>
+            <span class="close-btn" id="closeModal">&times;</span>
+        </div>
+
+        <form id="subjectForm">
+            <label>Subject Name</label>
+            <input type="text" id="subjectName" placeholder="Enter subject name" required />
+            <button type="submit" class="btn-submit">Add Subject</button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/subjects.js"></script>
+
+<style>
+.subject-task-count {
+    margin-top: 1rem;
+}
+
+.task-badge {
+    display: inline-block;
+    background: rgba(0, 245, 212, 0.1);
+    color: #00F5D4;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+</style>
+
+<%- include('partials/footer') %>

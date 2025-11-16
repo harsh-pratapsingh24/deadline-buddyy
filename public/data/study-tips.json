@@ -1,0 +1,170 @@
+[
+  {
+    "id": 1,
+    "category": "Time Management",
+    "title": "Use the Pomodoro Technique",
+    "description": "Break your study sessions into 25-minute focused intervals followed by 5-minute breaks. After 4 sessions, take a longer 15-30 minute break.",
+    "icon": "ph ph-timer",
+    "difficulty": "beginner",
+    "effectiveness": 95,
+    "benefits": [
+      "Maintains focus and concentration",
+      "Prevents mental fatigue",
+      "Improves time awareness"
+    ]
+  },
+  {
+    "id": 2,
+    "category": "Active Learning",
+    "title": "Feynman Technique",
+    "description": "Explain concepts in simple terms as if teaching someone else. If you struggle, review the material again until you can explain it clearly.",
+    "icon": "ph ph-chalkboard-teacher",
+    "difficulty": "intermediate",
+    "effectiveness": 90,
+    "benefits": [
+      "Identifies knowledge gaps",
+      "Deepens understanding",
+      "Improves retention"
+    ]
+  },
+  {
+    "id": 3,
+    "category": "Memory",
+    "title": "Spaced Repetition",
+    "description": "Review material at increasing intervals over time. Use flashcards and review them after 1 day, 3 days, 7 days, and so on.",
+    "icon": "ph ph-repeat",
+    "difficulty": "intermediate",
+    "effectiveness": 92,
+    "benefits": [
+      "Combats forgetting curve",
+      "Long-term retention",
+      "Efficient learning"
+    ]
+  },
+  {
+    "id": 4,
+    "category": "Organization",
+    "title": "Mind Mapping",
+    "description": "Create visual diagrams connecting main concepts to subtopics. Use colors, symbols, and images to make information more memorable.",
+    "icon": "ph ph-tree-structure",
+    "difficulty": "beginner",
+    "effectiveness": 85,
+    "benefits": [
+      "Visualizes relationships",
+      "Enhances creativity",
+      "Easy to recall"
+    ]
+  },
+  {
+    "id": 5,
+    "category": "Focus",
+    "title": "Eliminate Distractions",
+    "description": "Create a dedicated study space, turn off notifications, use website blockers, and inform others when you're studying.",
+    "icon": "ph ph-do-not-disturb",
+    "difficulty": "beginner",
+    "effectiveness": 88,
+    "benefits": [
+      "Improves concentration",
+      "Reduces stress",
+      "Better productivity"
+    ]
+  },
+  {
+    "id": 6,
+    "category": "Health",
+    "title": "Get Adequate Sleep",
+    "description": "Aim for 7-9 hours of sleep. Your brain consolidates memories during sleep, making it crucial for learning and retention.",
+    "icon": "ph ph-bed",
+    "difficulty": "beginner",
+    "effectiveness": 93,
+    "benefits": [
+      "Better memory consolidation",
+      "Improved focus",
+      "Enhanced problem-solving"
+    ]
+  },
+  {
+    "id": 7,
+    "category": "Active Learning",
+    "title": "Practice Retrieval",
+    "description": "Test yourself regularly without looking at notes. Active recall strengthens memory pathways more than passive reading.",
+    "icon": "ph ph-question",
+    "difficulty": "intermediate",
+    "effectiveness": 91,
+    "benefits": [
+      "Strengthens neural connections",
+      "Identifies weak areas",
+      "Boosts confidence"
+    ]
+  },
+  {
+    "id": 8,
+    "category": "Time Management",
+    "title": "Prioritize with Eisenhower Matrix",
+    "description": "Categorize tasks by urgency and importance. Focus on important-urgent tasks first, then important-not urgent ones.",
+    "icon": "ph ph-matrix-logo",
+    "difficulty": "intermediate",
+    "effectiveness": 87,
+    "benefits": [
+      "Better task management",
+      "Reduces overwhelm",
+      "Clear priorities"
+    ]
+  },
+  {
+    "id": 9,
+    "category": "Health",
+    "title": "Stay Hydrated & Eat Well",
+    "description": "Drink plenty of water and eat brain-healthy foods like nuts, berries, and fish. Avoid heavy meals before studying.",
+    "icon": "ph ph-drop",
+    "difficulty": "beginner",
+    "effectiveness": 82,
+    "benefits": [
+      "Better cognitive function",
+      "Sustained energy levels",
+      "Improved mood"
+    ]
+  },
+  {
+    "id": 10,
+    "category": "Organization",
+    "title": "Cornell Note-Taking Method",
+    "description": "Divide your page into three sections: notes, cues, and summary. Review and fill in cues after class, then write a summary.",
+    "icon": "ph ph-note-pencil",
+    "difficulty": "beginner",
+    "effectiveness": 86,
+    "benefits": [
+      "Organized notes",
+      "Easy review",
+      "Better comprehension"
+    ]
+  },
+  {
+    "id": 11,
+    "category": "Focus",
+    "title": "Study in Chunks",
+    "description": "Break large topics into smaller, manageable chunks. Master one chunk before moving to the next.",
+    "icon": "ph ph-puzzle-piece",
+    "difficulty": "beginner",
+    "effectiveness": 84,
+    "benefits": [
+      "Less overwhelming",
+      "Better understanding",
+      "Steady progress"
+    ]
+  },
+  {
+    "id": 12,
+    "category": "Active Learning",
+    "title": "Teach Others",
+    "description": "Form study groups and take turns teaching concepts to each other. Teaching is one of the best ways to learn.",
+    "icon": "ph ph-users-three",
+    "difficulty": "intermediate",
+    "effectiveness": 89,
+    "benefits": [
+      "Deepens understanding",
+      "Exposes gaps",
+      "Social learning"
+    ]
+  }
+]

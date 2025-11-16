@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "type": "deadline",
+    "title": "Assignment Due Tomorrow",
+    "message": "OOP in JAVA assignment is due tomorrow at 11:59 PM",
+    "priority": "high",
+    "date": "2025-11-15",
+    "time": "11:59 PM",
+    "subject": "OOP in JAVA",
+    "read": false
+  },
+  {
+    "id": 2,
+    "type": "exam",
+    "title": "Exam Reminder",
+    "message": "Data Structures exam in 3 days",
+    "priority": "high",
+    "date": "2025-11-17",
+    "time": "10:00 AM",
+    "subject": "Data Structures",
+    "read": false
+  },
+  {
+    "id": 3,
+    "type": "deadline",
+    "title": "Project Submission",
+    "message": "Web Development project submission in 5 days",
+    "priority": "medium",
+    "date": "2025-11-19",
+    "time": "5:00 PM",
+    "subject": "Web Development",
+    "read": true
+  },
+  {
+    "id": 4,
+    "type": "reminder",
+    "title": "Study Session",
+    "message": "Group study session for OOP concepts",
+    "priority": "low",
+    "date": "2025-11-16",
+    "time": "3:00 PM",
+    "subject": "OOP in JAVA",
+    "read": false
+  },
+  {
+    "id": 5,
+    "type": "deadline",
+    "title": "Lab Report Due",
+    "message": "Submit your Data Structures lab report",
+    "priority": "medium",
+    "date": "2025-11-18",
+    "time": "2:00 PM",
+    "subject": "Data Structures",
+    "read": false
+  }
+]

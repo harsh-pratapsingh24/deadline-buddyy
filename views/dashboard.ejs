@@ -1,0 +1,202 @@
+<%- include('partials/header') %> <%- include('partials/navbar', { page:
+"dashboard", currentUser: currentUser }) %>
+
+<!-- Add Task Modal -->
+<input type="checkbox" id="add-task-modal" class="modal-toggle" />
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add New Task</h2>
+      <label for="add-task-modal" class="close-btn">&times;</label>
+    </div>
+    <form class="task-form" id="taskForm" onsubmit="handleAddTask(event)">
+      <div class="form-group">
+        <label>Task Name</label>
+        <input
+          type="text"
+          id="taskName"
+          placeholder="Enter task name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <select id="taskSubject" required>
+          <option value="">Select Subject</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Due Date</label>
+        <input type="date" id="taskDate" required />
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="taskPriority" required>
+          <option value="">Select priority</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary">Add Task</button>
+    </form>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+  <section class="section active">
+    <div class="section-header">
+      <h2>Dashboard</h2>
+      <div class="button-group">
+        <label for="add-task-modal" class="btn-primary">
+          <i class="ph ph-plus"></i> Add New Task
+        </label>
+        <button class="btn-primary" onclick="resetAllTasks()">
+          <i class="ph ph-trash"></i> Reset All Tasks
+        </button>
+      </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="ph ph-clock"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="pendingCount">3</h3>
+          <p>Pending Tasks</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="ph ph-check-circle"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="completedCount">2</h3>
+          <p>Completed Today</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="ph ph-trend-up"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="progressPercent">75%</h3>
+          <p>Weekly Progress</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Overview -->
+    <div class="progress-section">
+      <div class="card progress-card">
+        <h3>Weekly Progress</h3>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 75%"></div>
+          </div>
+          <span class="progress-text">15 of 20 tasks completed this week</span>
+        </div>
+        <div class="progress-details">
+          <div class="progress-item">
+            <span class="progress-label">High Priority</span>
+            <div class="mini-progress">
+              <div class="mini-progress-fill high" style="width: 60%"></div>
+            </div>
+            <span class="progress-count">3/5</span>
+          </div>
+          <div class="progress-item">
+            <span class="progress-label">Medium Priority</span>
+            <div class="mini-progress">
+              <div class="mini-progress-fill medium" style="width: 80%"></div>
+            </div>
+            <span class="progress-count">8/10</span>
+          </div>
+          <div class="progress-item">
+            <span class="progress-label">Low Priority</span>
+            <div class="mini-progress">
+              <div class="mini-progress-fill low" style="width: 100%"></div>
+            </div>
+            <span class="progress-count">4/4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid">
+      <div class="card task-card">
+        <div class="card-header">
+          <h3><i class="ph ph-clock"></i> Upcoming Deadlines</h3>
+          <span class="task-count" id="upcomingCount">0</span>
+        </div>
+        <div class="task-list" id="upcomingTasks">
+          <!-- Tasks will be dynamically added here -->
+        </div>
+      </div>
+      <div class="card task-card">
+        <div class="card-header">
+          <h3><i class="ph ph-check-circle"></i> Completed Tasks</h3>
+          <span class="task-count" id="completedCountDisplay">0</span>
+        </div>
+        <div class="task-list" id="completedTasks">
+          <!-- Completed tasks will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Handle Add Task Form Submission
+  async function handleAddTask(event) {
+    event.preventDefault();
+
+    const title = document.getElementById("taskName").value;
+    const subject = document.getElementById("taskSubject").value;
+    const date = document.getElementById("taskDate").value;
+
+    try {
+      const response = await fetch("/api/tasks/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ title, subject, date }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          window.location.href = "/login";
+          return;
+        }
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: "Failed to add task" }));
+        throw new Error(errorData.error || "Failed to add task");
+      }
+
+      const task = {
+        name: title,
+        subject: subject,
+        date: date,
+        priority: document.getElementById("taskPriority").value || "low",
+      };
+
+      addTaskNotification(task);
+
+      document.getElementById("taskForm").reset();
+      document.getElementById("add-task-modal").checked = false;
+
+      await loadTasks();
+      showNotification("Task added successfully!");
+    } catch (error) {
+      console.error("Error adding task:", error);
+      showNotification(error.message || "Error adding task");
+    }
+  }
+</script>
+<script src="/js/dashboard.js"></script>
+
+<%- include('partials/footer') %>

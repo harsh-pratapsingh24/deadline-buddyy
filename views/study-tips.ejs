@@ -1,0 +1,368 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar', { page: "study-tips", currentUser: currentUser }) %>
+
+
+<!-- Main Content -->
+<main class="main-content">
+    <section class="section active">
+        <div class="section-header">
+            <h2><i class="ph ph-graduation-cap"></i> Study Tips & Techniques</h2>
+            <div class="search-box">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchTips" placeholder="Search tips...">
+            </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">
+                <i class="ph ph-stack"></i> All Tips
+            </button>
+            <button class="category-btn" data-category="Time Management">
+                <i class="ph ph-clock"></i> Time Management
+            </button>
+            <button class="category-btn" data-category="Active Learning">
+                <i class="ph ph-brain"></i> Active Learning
+            </button>
+            <button class="category-btn" data-category="Memory">
+                <i class="ph ph-database"></i> Memory
+            </button>
+            <button class="category-btn" data-category="Organization">
+                <i class="ph ph-folders"></i> Organization
+            </button>
+            <button class="category-btn" data-category="Focus">
+                <i class="ph ph-crosshair"></i> Focus
+            </button>
+            <button class="category-btn" data-category="Health">
+                <i class="ph ph-heart"></i> Health
+            </button>
+        </div>
+
+        <!-- Statistics -->
+        <div class="tips-stats">
+            <div class="stat-box">
+                <i class="ph ph-lightbulb"></i>
+                <span id="totalTips">0</span>
+                <p>Total Tips</p>
+            </div>
+            <div class="stat-box">
+                <i class="ph ph-chart-line"></i>
+                <span id="avgEffectiveness">0</span>
+                <p>Avg. Effectiveness</p>
+            </div>
+            <div class="stat-box">
+                <i class="ph ph-check-circle"></i>
+                <span id="beginnerTips">0</span>
+                <p>Beginner Tips</p>
+            </div>
+        </div>
+
+        <!-- Tips Grid -->
+        <div class="tips-grid" id="tipsGrid">
+            <div class="loading-spinner">Loading study tips...</div>
+        </div>
+    </section>
+</main>
+
+<script src="/js/study-tips.js"></script>
+
+
+<style>
+    /* Study Tips Specific Styles */
+    .search-box {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+    }
+
+    .search-box i {
+        color: #00F5D4;
+        font-size: 1.2rem;
+    }
+
+    .search-box input {
+        background: transparent;
+        border: none;
+        color: #EAEAEA;
+        outline: none;
+        width: 250px;
+    }
+
+    .category-filter {
+        display: flex;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .category-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #EAEAEA;
+        padding: 0.7rem 1.2rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .category-btn:hover {
+        background: rgba(0, 245, 212, 0.1);
+        border-color: rgba(0, 245, 212, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .category-btn.active {
+        background: linear-gradient(135deg, #00F5D4, #00D4AA);
+        color: #090A0F;
+        border-color: transparent;
+    }
+
+    .tips-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .stat-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 245, 212, 0.2);
+    }
+
+    .stat-box i {
+        font-size: 2rem;
+        color: #00F5D4;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-box span {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #EAEAEA;
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    .stat-box p {
+        margin: 0;
+        opacity: 0.7;
+        font-size: 0.9rem;
+    }
+
+    .tips-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .tip-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .tip-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 245, 212, 0.2);
+        border-color: rgba(0, 245, 212, 0.3);
+    }
+
+    .tip-card.difficulty-beginner {
+        border-left: 4px solid #4BC0C0;
+    }
+
+    .tip-card.difficulty-intermediate {
+        border-left: 4px solid #FFCE56;
+    }
+
+    .tip-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .tip-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #00F5D4, #00D4AA);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #090A0F;
+    }
+
+    .tip-category-badge {
+        background: rgba(0, 245, 212, 0.1);
+        color: #00F5D4;
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .tip-title {
+        font-size: 1.2rem;
+        margin: 1rem 0 0.8rem 0;
+        color: #EAEAEA;
+    }
+
+    .tip-description {
+        line-height: 1.6;
+        opacity: 0.8;
+        margin-bottom: 1rem;
+    }
+
+    .tip-effectiveness {
+        margin: 1rem 0;
+    }
+
+    .effectiveness-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .effectiveness-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #00F5D4, #00D4AA);
+        border-radius: 4px;
+        transition: width 0.8s ease;
+    }
+
+    .effectiveness-text {
+        font-size: 0.85rem;
+        font-family: 'Fira Code', monospace;
+        color: #00F5D4;
+    }
+
+    .tip-benefits {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .tip-benefits strong {
+        color: #00F5D4;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .tip-benefits ul {
+        margin: 0;
+        padding-left: 1.2rem;
+    }
+
+    .tip-benefits li {
+        margin: 0.3rem 0;
+        opacity: 0.8;
+        font-size: 0.9rem;
+    }
+
+    .tip-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .difficulty-badge {
+        padding: 0.4rem 0.9rem;
+        border-radius: 16px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .difficulty-badge.beginner {
+        background: rgba(75, 192, 192, 0.2);
+        color: #4BC0C0;
+    }
+
+    .difficulty-badge.intermediate {
+        background: rgba(255, 206, 84, 0.2);
+        color: #FFCE56;
+    }
+
+    .save-tip-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #EAEAEA;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .save-tip-btn:hover {
+        background: rgba(0, 245, 212, 0.1);
+        border-color: #00F5D4;
+        transform: scale(1.05);
+    }
+
+    .no-tips, .error-message {
+        text-align: center;
+        padding: 3rem;
+        opacity: 0.7;
+        grid-column: 1 / -1;
+    }
+
+    @media (max-width: 768px) {
+        .tips-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .search-box input {
+            width: 150px;
+        }
+
+        .category-filter {
+            gap: 0.5rem;
+        }
+
+        .category-btn {
+            font-size: 0.8rem;
+            padding: 0.6rem 1rem;
+        }
+    }
+</style>
+
+<%- include('partials/footer') %>
