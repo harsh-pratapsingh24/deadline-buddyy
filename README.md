@@ -1,9 +1,3 @@
-Here’s a **clean, professional, copy-paste ready `README.md`** for your GitHub repo.
-No extra fluff, no missing points — **perfect for evaluation + recruiters**.
-
----
-
-```md
 # 📌 Deadline Buddy
 
 Deadline Buddy is a full-stack task and deadline management web application built as part of a Web Development course project. The application allows users to securely manage tasks, track completed and pending work, and stay organized through a dynamic and interactive dashboard.
@@ -43,32 +37,6 @@ This project strictly follows the evaluation guidelines provided by the course c
 
 **Development Tools**
 - Nodemon  
-
----
-
-## 📂 Project Structure
-
-```
-
-deadline-buddyy/
-│
-├── views/            # EJS templates (Frontend)
-│   ├── login.ejs
-│   ├── signup.ejs
-│   ├── dashboard.ejs
-│
-├── public/           # Static files
-│   ├── css/
-│   ├── js/
-│
-├── routes/           # Express routes
-├── models/           # MongoDB schemas
-│
-├── app.js            # Main server file
-├── package.json
-└── README.md
-
-````
 
 ---
 
