@@ -159,11 +159,12 @@
     const date = document.getElementById("taskDate").value;
 
     try {
+      const priority = document.getElementById("taskPriority").value || "medium";
       const response = await fetch("/api/tasks/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, subject, date }),
+        body: JSON.stringify({ title, subject, date, priority }),
       });
 
       if (!response.ok) {

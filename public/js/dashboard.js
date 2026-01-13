@@ -351,13 +351,19 @@ function loadSubjects() {
 }
 
 // Show Notification Toast
-function showNotification(message) {
+function showNotification(message, type = "success") {
   const toast = document.createElement("div");
+  const bgColor = type === "error" 
+    ? "linear-gradient(135deg, #FF6384, #FF4757)" 
+    : type === "info"
+    ? "linear-gradient(135deg, #FFCE56, #FFA726)"
+    : "linear-gradient(135deg, #00F5D4, #00D4AA)";
+  
   toast.style.cssText = `
     position: fixed;
     top: 20px;
     right: 20px;
-    background: linear-gradient(135deg, #00F5D4, #00D4AA);
+    background: ${bgColor};
     color: #1A1A2E;
     padding: 1rem 1.5rem;
     border-radius: 8px;

@@ -94,10 +94,20 @@ app.post("/register", async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await User.create({
+  const newUser = await User.create({
     email,
     password: hashedPassword,
   });
+
+  // Send welcome email to the registered email address
+  try {
+    const { sendWelcomeEmail } = require("./utils/emailService");
+    await sendWelcomeEmail(email);
+    console.log(`✅ Welcome email sent to new user: ${email}`);
+  } catch (error) {
+    console.log(`⚠️  Could not send welcome email to ${email}:`, error.message);
+    // Don't block registration if email fails
+  }
 
   res.redirect("/login");
 });
@@ -189,8 +199,14 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/user", userRoutes);
 
 const notificationRoutes = require("./routes/notificationRoutes");
+const emailRoutes = require("./routes/emailRoutes");
 
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/email", emailRoutes);
+
+// --- EMAIL SCHEDULER ---
+const { startEmailScheduler } = require("./utils/emailScheduler");
+startEmailScheduler();
 
 // --- START SERVER ---
 app.listen(PORT, () => {

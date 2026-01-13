@@ -156,21 +156,35 @@ class NotificationManager {
     // MARK READ (MongoDB)
     async markNotificationAsRead(id) {
         try {
-            await fetch("/api/notifications/mark-read", {
+            const response = await fetch("/api/notifications/mark-read", {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id })
             });
 
-            const notif = this.notifications.find(n => n.id === id);
-            if (notif) notif.read = true;
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.location.href = "/login";
+                    return;
+                }
+                const errorData = await response.json().catch(() => ({ error: "Failed to mark as read" }));
+                throw new Error(errorData.error || "Failed to mark as read");
+            }
 
-            this.renderNotifications();
-            this.showNotification("Marked as read");
+            const data = await response.json();
+            if (data.success) {
+                const notif = this.notifications.find(n => n.id === id);
+                if (notif) notif.read = true;
+                this.renderNotifications();
+                this.showNotification("Marked as read");
+            } else {
+                throw new Error(data.error || "Failed to mark as read");
+            }
 
         } catch (err) {
             console.error("Failed to mark as read:", err);
+            this.showNotification(err.message || "Failed to mark as read");
         }
     }
 
@@ -179,36 +193,67 @@ class NotificationManager {
         if (!confirm("Delete this notification?")) return;
 
         try {
-            await fetch("/api/notifications/delete", {
+            const response = await fetch("/api/notifications/delete", {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id })
             });
 
-            this.notifications = this.notifications.filter(n => n.id !== id);
-            this.renderNotifications();
-            this.showNotification("Notification deleted");
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.location.href = "/login";
+                    return;
+                }
+                const errorData = await response.json().catch(() => ({ error: "Failed to delete notification" }));
+                throw new Error(errorData.error || "Failed to delete notification");
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                this.notifications = this.notifications.filter(n => n.id !== id);
+                this.renderNotifications();
+                this.showNotification("Notification deleted");
+            } else {
+                throw new Error(data.error || "Failed to delete notification");
+            }
 
         } catch (err) {
             console.error("Failed to delete notification:", err);
+            this.showNotification(err.message || "Failed to delete notification");
         }
     }
 
     // MARK ALL READ (MongoDB)
     async markAllAsRead() {
         try {
-            await fetch("/api/notifications/mark-all-read", {
+            const response = await fetch("/api/notifications/mark-all-read", {
                 method: "POST",
-                credentials: "include"
+                credentials: "include",
+                headers: { "Content-Type": "application/json" }
             });
 
-            this.notifications.forEach(n => (n.read = true));
-            this.renderNotifications();
-            this.showNotification("All marked as read");
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.location.href = "/login";
+                    return;
+                }
+                const errorData = await response.json().catch(() => ({ error: "Failed to mark all as read" }));
+                throw new Error(errorData.error || "Failed to mark all as read");
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                this.notifications.forEach(n => (n.read = true));
+                this.renderNotifications();
+                this.showNotification("All marked as read");
+            } else {
+                throw new Error(data.error || "Failed to mark all as read");
+            }
 
         } catch (err) {
             console.error("Failed to mark all read:", err);
+            this.showNotification(err.message || "Failed to mark all as read");
         }
     }
 
@@ -217,17 +262,33 @@ class NotificationManager {
         if (!confirm("Clear ALL notifications?")) return;
 
         try {
-            await fetch("/api/notifications/clear-all", {
+            const response = await fetch("/api/notifications/clear-all", {
                 method: "POST",
-                credentials: "include"
+                credentials: "include",
+                headers: { "Content-Type": "application/json" }
             });
 
-            this.notifications = [];
-            this.renderNotifications();
-            this.showNotification("All notifications cleared");
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.location.href = "/login";
+                    return;
+                }
+                const errorData = await response.json().catch(() => ({ error: "Failed to clear all notifications" }));
+                throw new Error(errorData.error || "Failed to clear all notifications");
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                this.notifications = [];
+                this.renderNotifications();
+                this.showNotification("All notifications cleared");
+            } else {
+                throw new Error(data.error || "Failed to clear all notifications");
+            }
 
         } catch (err) {
             console.error("Failed to clear all:", err);
+            this.showNotification(err.message || "Failed to clear all notifications");
         }
     }
 

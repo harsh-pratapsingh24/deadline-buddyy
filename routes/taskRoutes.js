@@ -11,7 +11,7 @@ router.use(isLoggedInAPI);
 
 router.post("/add", async (req, res) => {
     try {
-        const { title, subject, date } = req.body;
+        const { title, subject, date, priority } = req.body;
 
         if (!title || !subject || !date) {
             return res.status(400).json({
@@ -26,6 +26,7 @@ router.post("/add", async (req, res) => {
             title,
             subject,
             date,
+            priority: priority || "medium", // Use provided priority or default to medium
         });
 
         // 2️⃣ Auto-create a notification for the task
@@ -34,7 +35,7 @@ router.post("/add", async (req, res) => {
             title: `Task Added: ${title}`,
             message: `A new task for ${subject} was added. Deadline: ${date}`,
             type: "deadline",
-            priority: "high",
+            priority: priority || "high", // Use task priority or default to high
             subject,
             date,
             time: "00:00",

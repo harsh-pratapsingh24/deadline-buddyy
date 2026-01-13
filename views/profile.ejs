@@ -46,6 +46,14 @@
             </div>
           </div>
 
+          <div class="email-notice">
+            <i class="ph ph-bell-ringing"></i>
+            <div>
+              <strong>Email Reminders</strong>
+              <p>You'll receive automatic deadline reminders at <strong><%= currentUser?.email %></strong> for tasks due within 7 days.</p>
+            </div>
+          </div>
+
           <p class="coming-soon">More profile options coming soon...</p>
         </form>
       </div>
@@ -135,6 +143,36 @@
     border: none;
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
+  }
+
+  .email-notice {
+    background: rgba(0, 245, 212, 0.1);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .email-notice i {
+    font-size: 1.5rem;
+    color: #00F5D4;
+    flex-shrink: 0;
+  }
+
+  .email-notice strong {
+    color: #00F5D4;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .email-notice p {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .coming-soon {
